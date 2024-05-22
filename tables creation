@@ -1,0 +1,77 @@
+Physical Model:
+DDL:
+create table owner (
+ownerID char(4) primary key
+)
+create table person(
+SSN varchar(4) primary key,
+Pname varchar(15) not null,
+phone char(10),
+ownerID1 char(4),
+foreign key(ownerID1) references owner(ownerID)
+)
+create table goverment(
+country varchar(10) primary key,
+ownerID2 char(4),
+foreign key(ownerID2) references owner(ownerID)
+)
+create table hospital(
+hospitalID varchar(4) primary key,
+Hname varchar(10) unique,
+address varchar(30)
+)
+create table owns (
+ownerID3 char(4),
+hospital_ID varchar(4),
+foreign key(ownerID3) references owner(ownerID),
+foreign key(hospital_ID) references hospital(hospitalID)
+)
+create table Medical_Record(
+Record_ID char(4) primary key,
+Record_Date varchar(10),
+Problem varchar(15)
+)
+create table patient(
+Serial_No char(4) primary key,
+PatientName varchar(10) not null,
+Record_ID1 char(4),
+hospitalID3 varchar(4),
+foreign key(hospitalID3) references hospital(hospitalID),
+foreign key(Record_ID1) references Medical_Record(Record_ID),
+Insurance_CompID char(4),
+patcategory char(2)
+)
+create table Hospital_Crew(
+CrewID char(4) primary key,
+CrewName varchar(10),
+Hospital_ID2 varchar(4),
+foreign key(Hospital_ID2) references hospital(hospitalID),
+hours char(2),
+Experience char(2),
+Patient_No1 char(4),
+type varchar(10),
+foreign key(Patient_No1) references patient(Serial_No)
+)
+create table Department(
+Dept_No char(4) primary key,
+Floor char(2),
+No_Of_Emp char(4),
+Hospital_ID2 varchar(4),
+Specialization varchar(10),
+CrewID2 char(4),
+managedby char(4),
+foreign key(CrewID2) references Hospital_Crew(CrewID),
+foreign key(Hospital_ID2) references hospital(hospitalID)
+)
+create table Insurance_Comp(
+CompID char(4) primary key,
+CompName varchar(10) not null,
+CompAddress varchar(30),
+Serial_No1 char(4),
+foreign key(Serial_No1) references patient(Serial_No)
+)
+create table Specialization(
+Dr_Specialization varchar(20) primary key,
+Dr_ID char(4),
+foreign key(Dr_ID ) references Hospital_Crew(CrewID)
+)
